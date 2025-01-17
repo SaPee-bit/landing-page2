@@ -53,7 +53,7 @@ export const Team = () => {
           <div className="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
             <div className="team-member">
               <div className="member-img">
-                <img src="img/team/team-3.jpg" className="img-fluid" alt="" />
+                <img src="img/team/team-3.png" className="img-fluid" alt="" />
                 <div className="social">
                   <a href=""><i className="bi bi-twitter-x"></i></a>
                   <a href=""><i className="bi bi-facebook"></i></a>
@@ -71,7 +71,7 @@ export const Team = () => {
           <div className="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
             <div className="team-member">
               <div className="member-img">
-                <img src="img/team/team-4.jpg" className="img-fluid" alt="" />
+                <img src="img/team/team-4.png" className="img-fluid" alt="" />
                 <div className="social">
                   <a href=""><i className="bi bi-twitter-x"></i></a>
                   <a href=""><i className="bi bi-facebook"></i></a>

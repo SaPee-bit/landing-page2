@@ -71,7 +71,7 @@ export const Testimonials = () => {
                   Export tempor illum tamen malis malis eram quae irure esse labore quem...
                   <i className="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="img/testimonials/testimonials-2.jpg" className="testimonial-img" alt="" />
+                <img src="img/testimonials/testimonials-2.png" className="testimonial-img" alt="" />
                 <h3>Sara Wilsson</h3>
                 <h4>Designer</h4>
               </div>
@@ -99,7 +99,7 @@ export const Testimonials = () => {
                   Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos...
                   <i className="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="img/testimonials/testimonials-4.jpg" className="testimonial-img" alt="" />
+                <img src="img/testimonials/testimonials-4.png" className="testimonial-img" alt="" />
                 <h3>Matt Brandon</h3>
                 <h4>Freelancer</h4>
               </div>
