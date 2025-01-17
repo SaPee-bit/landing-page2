@@ -55,7 +55,12 @@ export const Contact = () => {
               className="php-email-form"
               data-aos="fade-up"
               data-aos-delay="200"
+              data-netlify= "true"
+              onSubmit="submit"
+              name="contact v1"
             >
+              <input type="hidden" name="form-name" value="contact v1" />
+              
               <div className="row gy-4">
                 <div className="col-md-6">
                   <input
