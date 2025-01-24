@@ -7,12 +7,12 @@ export const Projects = () => {
         <div className="container py-5">
           <div className="row justify-content-center">
             <h2 className="fw-bold">Projects</h2>
-            <p className="lead text-muted mb-5">View some of my latest projects</p>
+            <p>View some of my latest projects</p>
           </div>
         </div>
         <div className="container mb-5">
           <div className="row">
-            <div className="col-lg-4 mx-auto mb-5">
+            <div className="col-lg-4 mx-auto mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine" data-aos-delay="100">
               <div className="card h-100 shadow-lg border-0 bg-light">
                 <img className="card-img-top" src="img/projects/project1.png" alt="Project 1"/> 
                 <div className="card-body p-4">
@@ -40,7 +40,7 @@ export const Projects = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 mx-auto mb-5">
+            <div className="col-lg-4 mx-auto mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine" data-aos-delay="200">
               <div className="card h-100 shadow-lg border-0 bg-light">
                 <img className="card-img-top" src="img/projects/project2.png" alt="Project 2" />
                 <div className="card-body p-4">
@@ -68,7 +68,7 @@ export const Projects = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 mx-auto mb-5">
+            <div className="col-lg-4 mx-auto mb-5" data-aos="fade-up" data-aos-easing="ease-in-sine" data-aos-delay="300">
               <div className="card h-100 shadow-lg border-0 bg-light">
                 <img className="card-img-top" src="img/projects/ligtMode.PNG" alt="Project 3" />
                 <div className="card-body p-4">

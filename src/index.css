@@ -27,20 +27,74 @@
   }
   
   /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
-  
-  .light-background {
-    --background-color: #f6fafd;
-    --surface-color: #ffffff;
+ 
+  /* Dark Mode Styles (when prefers-color-scheme is dark) */
+@media (prefers-color-scheme: dark) {
+  :root {
+      --background-color: #060606; /* Dark background */
+      --default-color: #ffffff; /* Light text for dark background */
+      --heading-color: #ffffff; /* Light color for headings */
+      --accent-color:rgb(167, 159, 159); /* Accent color remains the same */
+      --surface-color: #252525; /* Darker surface color */
+      --contrast-color: #ffffff; /* Light color for contrast text */
   }
-  
+  :root {
+    /* Dark Mode Colors for Nav Menu */
+    --nav-color: #a9c5d3;  /* Lighter color for text on dark background */
+    --nav-hover-color: #66a9d6;  /* Brighter color for hover/active states */
+    --nav-mobile-background-color: #333333;  /* Dark background for mobile nav */
+    --nav-dropdown-background-color: #444444;  /* Dark background for dropdown */
+    --nav-dropdown-color: #a9c5d3;  /* Lighter text color for dropdown links */
+    --nav-dropdown-hover-color: #66a9d6;  /* Brighter hover color for dropdown links */
+  }
+}
+
+/* Or use a custom class for manual toggle */
+.dark {
+  --background-color:rgb(19, 19, 19); /* Dark background */
+  --default-color:rgb(187, 185, 185); /* Light text for dark background */
+  --heading-color: #ffffff; /* Light color for headings */
+  --accent-color: #3b3ee9; /* Accent color remains the same */
+  --surface-color:rgb(34, 33, 33); /* Darker surface color */
+  --contrast-color: #ffffff; /* Light color for contrast text */
+  --nav-color: #a9c5d3;  /* Lighter color for text on dark background */
+  --nav-hover-color: #66a9d6;  /* Brighter color for hover/active states */
+  --nav-mobile-background-color: #333333;  /* Dark background for mobile nav */
+  --nav-dropdown-background-color: #444444;  /* Dark background for dropdown */
+  --nav-dropdown-color: #a9c5d3;  /* Lighter text color for dropdown links */
+  --nav-dropdown-hover-color: #66a9d6;  /* Brighter hover color for dropdown links */
+}
+
+ 
+  /* Light Mode Background */
+.light-background {
+  --background-color: #f6fafd;  /* Light background color */
+  --surface-color: #ffffff;     /* Light surface color */
+}
+
+/* Dark Mode Background */
+
   .dark-background {
     --background-color: #060606;
-    --default-color: #ffffff;
+    --default-color:rgb(203, 209, 212);
     --heading-color: #ffffff;
     --surface-color: #252525;
     --contrast-color: #ffffff;
   }
-  
+
+  .darkFooter-background {
+    --background-color: #060606;
+    --default-color:rgb(170, 164, 164);
+    --heading-color: #ffffff;
+    --surface-color: #252525;
+    --contrast-color:rgb(230, 225, 225);
+  }
+
+  .darkSocial-background {
+    --contrast-color:rgb(58, 54, 54);
+    --accent-color: rgb(110, 38, 38);
+  }
+
   .accent-background {
     --background-color: #2487ce;
     --default-color: #ffffff;
@@ -1822,3 +1876,75 @@
     color: var(--accent-color);
   }
   
+/*--------------------------------------------------------------
+  # Page loading Details Section
+  --------------------------------------------------------------*/
+.loading {
+  width: 100%;
+  height: 750px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading span {
+  animation: dot-blink 1s infinite;
+  font-size: 80px;
+  margin: 0 5px;
+  color: blue;
+}
+
+.loading span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.loading span:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes dot-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+  /*--------------------------------------------------------------
+  # Mode toggle setup 
+  --------------------------------------------------------------*/
+  .toggleTheme {
+    position: fixed;
+    bottom: 60px;
+    right: 16px;
+    padding: 5px 10px ;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .toggleTheme:hover {
+    background-color: #0056b3;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+
+  /*--------------------------------------------------------------
+  # CSS for expanding project cards on hover
+  --------------------------------------------------------------*/
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: scale(1);
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for emphasis */
+}

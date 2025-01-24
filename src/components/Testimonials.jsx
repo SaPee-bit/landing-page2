@@ -1,42 +1,39 @@
-import { useEffect } from "react";
-import Swiper from "swiper/bundle";
-import 'swiper/swiper-bundle.min.css';  // Swiper CSS import
+import { useEffect } from 'react'
+import Swiper from 'swiper/bundle'
+import 'swiper/swiper-bundle.min.css' // Swiper CSS import
 
 export const Testimonials = () => {
   useEffect(() => {
     // Initialize Swiper after the component mounts
-    const swiper = new Swiper('.swiper-container', {
-      loop: true,  // Enable continuous loop
-      speed: 600,  // Transition speed between slides
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      centeredSlides: true, // Center the active slide
       autoplay: {
-        delay: 5000,  // Delay between slides
+        delay: 5000,
+        disableOnInteraction: false,
       },
-      slidesPerView: 1,  // Default slides per view (1 slide on small screens)
-      spaceBetween: 30,  // Space between slides
       pagination: {
         el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true,  // Allow clicking on pagination bullets
+        clickable: true,
       },
+      spaceBetween: 30, // Space between slides
+      loopAdditionalSlides: 5, // Clone 5 additional slides for a smoother loop
+      slidesPerView: 'auto', // Dynamic slides per view
+      // Responsive breakpoints
       breakpoints: {
-        320: {
-          slidesPerView: 1,  // 1 slide on mobile screens
-          spaceBetween: 20,
+       768: {
+          slidesPerView: 1, // Show 1 slide on mobile/tablets
         },
-        768: {
-          slidesPerView: 2,  // 2 slides on tablet screens
-          spaceBetween: 20,
-        },
-        1200: {
-          slidesPerView: 3,  // 3 slides on larger screens
+        // When screen width is greater than 768px (for desktop)
+        769: {
+          slidesPerView: 3, // Show 3 slides on desktop
+          loopAdditionalSlides: 3,
           spaceBetween: 40,
         },
       },
-    });
-
-    // Cleanup swiper instance on component unmount
-    return () => swiper.destroy();
-  }, []); // Empty dependency array ensures it runs only once when component mounts
+      initialSlide: 0, // Start from the first slide
+    })
+  }, [])
 
   return (
     <section id="testimonials" className="testimonials section">
@@ -47,7 +44,7 @@ export const Testimonials = () => {
 
       <div className="container" data-aos="fade-up" data-aos-delay="100">
         {/* Swiper Container */}
-        <div className="swiper-container">
+        <div className="swiper">
           <div className="swiper-wrapper">
             {/* Testimonial 1 */}
             <div className="swiper-slide">
@@ -124,7 +121,5 @@ export const Testimonials = () => {
         </div>
       </div>
     </section>
-  );
-};
-
-
+  )
+}

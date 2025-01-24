@@ -1,8 +1,10 @@
 
 
-export const Team = () => {
+export const Team = ({ isDarkMode }) => {
   return (
-    <section id="team" className="team section light-background">
+    <section id="team" 
+    className={`team section ${isDarkMode ? 'dark-background' : 'light-background'}`}
+    >
 
       {/*-- Section Title --*/}
       <div className="container section-title" data-aos="fade-up">
