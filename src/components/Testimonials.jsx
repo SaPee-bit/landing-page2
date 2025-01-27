@@ -33,6 +33,8 @@ export const Testimonials = () => {
       },
       initialSlide: 0, // Start from the first slide
     })
+
+    window.addEventListener("load", swiper)
   }, [])
 
   return (

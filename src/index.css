@@ -116,6 +116,7 @@
     color: var(--default-color);
     background-color: var(--background-color);
     font-family: var(--default-font);
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
   
   a {
@@ -339,7 +340,8 @@
   /*--------------------------------------------------------------
   # Navigation Menu
   --------------------------------------------------------------*/
-  /* Navmenu - Desktop */
+
+  /* -------------------- Desktop Navigation -------------------- */
   @media (min-width: 1200px) {
     .navmenu {
       padding: 0;
@@ -446,7 +448,7 @@
     }
   }
   
-  /* Navmenu - Mobile */
+  /* -------------------- Mobile Navigation -------------------- */
   @media (max-width: 1199px) {
     .mobile-nav-toggle {
       color: var(--nav-color);
@@ -459,7 +461,7 @@
   
     .navmenu {
       padding: 0;
-      z-index: 9997;
+      z-index: 1000;
     }
   
     .navmenu ul {
@@ -528,22 +530,28 @@
     .navmenu .dropdown ul {
       position: static;
       display: none;
-      z-index: 99;
+      z-index: 499;
       padding: 10px 0;
       margin: 10px 20px;
       background-color: var(--nav-dropdown-background-color);
       border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
       box-shadow: none;
-      transition: all 0.5s ease-in-out;
+      /*transition: all 0.5s ease-in-out;*/
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      opacity: 0;
+      pointer-events: none;
     }
   
     .navmenu .dropdown ul ul {
       background-color: rgba(33, 37, 41, 0.1);
     }
   
-    .navmenu .dropdown>.dropdown-active {
+    .navmenu .dropdown.dropdown-active ul {
       display: block;
       background-color: rgba(33, 37, 41, 0.03);
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
     }
   
     .mobile-nav-active {
@@ -739,8 +747,8 @@
   --------------------------------------------------------------*/
   .scroll-top {
     position: fixed;
-    visibility: hidden;
-    opacity: 0;
+    visibility: hidden; /* Hidden by default */
+    opacity: 0; /* Invisible by default */
     right: 15px;
     bottom: 15px;
     z-index: 99999;
@@ -748,24 +756,21 @@
     width: 40px;
     height: 40px;
     border-radius: 4px;
-    transition: all 0.4s;
+    transition: visibility 0s 0.4s, opacity 0.4s ease-in-out; /* Smooth transition for visibility and opacity */
   }
   
   .scroll-top i {
     font-size: 24px;
-    color: var(--contrast-color);
-    line-height: 0;
-  }
-  
-  .scroll-top:hover {
     background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
     color: var(--contrast-color);
   }
   
   .scroll-top.active {
-    visibility: visible;
-    opacity: 1;
+    visibility: visible; /* Make it visible */
+    opacity: 1; /* Fully visible */
+    transition: visibility 0s, opacity 0.4s ease-in-out; /* Smooth fade-in */
   }
+  
   
   /*--------------------------------------------------------------
   # Disable aos animation delay on mobile devices
@@ -1923,7 +1928,7 @@
     bottom: 60px;
     right: 16px;
     padding: 5px 10px ;
-    background-color: #007bff;
+    background-color: #0662cb;
     color: white;
     border: none;
     cursor: pointer;

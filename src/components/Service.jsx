@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types'
 
 export const Service = ({ isDarkMode }) => {
   
@@ -119,5 +119,8 @@ export const Service = ({ isDarkMode }) => {
 
   )
 }
+  // PropTypes validation
+Service.propTypes = {
+  isDarkMode: PropTypes.bool.isRequired  
+}
 
- 

@@ -1,16 +1,14 @@
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
 import { useState } from "react"
 import axios from "axios"
 import { useForm } from "react-hook-form"
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+
 
 export const Contact = () => {
-  const [userInfo, setUserInfo] = useState()
-  
-  // Initialize the form with react-hook-form
+  const [setUserInfo] = useState()
   const { register, handleSubmit, formState: { errors }, reset } = useForm()
-
-  // Prohibited words for message validation
   const prohibitedWords = ['spam', 'scam', 'fuck', 'fool']
+  const position = [9.0586, 7.4894] // Default position (latitude, longitude)
 
   // Custom validation for Message
   const validateMessage = (value) => {
@@ -105,22 +103,26 @@ export const Contact = () => {
         console.log("Failed to send message.")
       })
   }
+  
 
   return (
     <section id="contact" className="contact section">
-      {/* Google Map Section */}
-      <div style={{ height: "400px", width: "100%" }}>
-        <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
-          <GoogleMap
-            mapContainerStyle={{ height: "100%", width: "100%" }}
-            center={{ lat: 9.05785, lng: 7.49508 }} // Coordinates for Abuja
-            zoom={12}
-          >
-            {/* Add a marker for Abuja */}
-            <Marker position={{ lat: 9.05785, lng: 7.49508 }} />
-          </GoogleMap>
-        </LoadScript>
-      </div>
+      {/* leaflet Map Section */}
+      <MapContainer
+      center={position}
+      zoom={13}
+      style={{ height: "400px", width: "100%", zIndex: 10  }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      />
+      <Marker position={position}>
+        <Popup>
+          
+        </Popup>
+      </Marker>
+    </MapContainer>
 
       {/* Contact Information and Form Section Below Google Map */}
       <div className="container" data-aos="fade-up" data-aos-delay="100" style={{ marginTop: "40px" }}>
@@ -209,7 +211,7 @@ export const Contact = () => {
                     {...register('message', {
                       validate: validateMessage,  // Apply custom message validation
                     })}
-                  ></textarea>
+                  />
                   {errors.message && <p style={{ color: 'red' }}>{errors.message.message}</p>}
                 </div>
 

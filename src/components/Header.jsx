@@ -1,4 +1,5 @@
 import ImportantDevicesOutlinedIcon from '@mui/icons-material/ImportantDevicesOutlined'
+import PropTypes from 'prop-types'
 
 export const Header = ({ isDarkMode, toggleTheme }) => {
     
@@ -59,4 +60,10 @@ export const Header = ({ isDarkMode, toggleTheme }) => {
             </div>
         </header>
     )
+}
+
+  // PropTypes validation
+Header.propTypes = {
+  isDarkMode: PropTypes.bool.isRequired,
+  toggleTheme: PropTypes.func.isRequired 
 }

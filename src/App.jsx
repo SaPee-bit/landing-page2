@@ -1,6 +1,5 @@
-import { ThemeProvider, ThemeContext } from "./themeContext/ThemeContext"
+import { ThemeContext, ThemeProvider} from "./themeContext/ThemeContext"
 import { useContext, useEffect, useState } from "react"
-import classNames from "classnames"
 import { Header } from "./components/Header"
 import { Hero } from "./components/Hero"
 import { About } from "./components/About"
@@ -17,192 +16,204 @@ import { Footer } from "./components/Footer"
 import Aos from "aos"
 import 'aos/dist/aos.css'
 
-
-const AppContent = () => {
-  const { isDarkMode, toggleTheme } = useContext(ThemeContext) // Use context to access theme state
+const AppFunctions = () => {
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext)
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setLoading(false)
-    Aos.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: false,
-      mirror: false
-    })
-    /**
-   * Apply .scrolled class to the body as the page is scrolled down
-   */
+  const body = document.body
+  // Utility function to select elements
+  const select = (selector, all = false) => 
+    all ? document.querySelectorAll(selector) : document.querySelector(selector)
+  
+  useEffect(() => {  
+    const mobileNavToggleBtn = select(".mobile-nav-toggle")
+    const navLinks = select("#navmenu a", true)
+    const navMenuLinks = select(".navmenu a", true)
+    const scrollTop = select('.scroll-top')
+    
+    // Apply .scrolled class to body when scrolling
     const toggleScrolled = () => {
-      const body = document.querySelector("body")
-      const header = document.querySelector("#header")
+      const body = select("body")
+      const header = select("#header")
       if (
         header &&
-        (header.classList.contains("scroll-up-sticky") ||
+        ( header.classList.contains("scroll-up-sticky") ||
           header.classList.contains("sticky-top") ||
-          header.classList.contains("fixed-top"))
+          header.classList.contains("fixed-top") )
+            
       ) {
         window.scrollY > 100
-          ? body.classList.add("scrolled")
-          : body.classList.remove("scrolled")
+        ? body.classList.add("scrolled")
+        : body.classList.remove("scrolled")
       }
     }
-
-    window.addEventListener("scroll", toggleScrolled)
-    toggleScrolled()
-
-    
-    // Mobile nav toggle
-    const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
-    const toggleMobileNav = () => {
-      const body = document.querySelector("body")
-      body.classList.toggle("mobile-nav-active")
-      mobileNavToggleBtn.classList.toggle("bi-list")
-      mobileNavToggleBtn.classList.toggle("bi-x")
-    }
-
-    if (mobileNavToggleBtn) {
-      console.log("Click statuse:", toggleMobileNav)
-      mobileNavToggleBtn.addEventListener("click", toggleMobileNav)
-    }
-
     /**
-   * Hide mobile nav on same-page/hash links
-   */
-    document.querySelectorAll('#navmenu a').forEach(navmenu => {
-      navmenu.addEventListener('click', () => {
-        if (document.querySelector('.mobile-nav-active')) {
-          toggleMobileNav()
+     * Mobile nav toggle
+     */
+    
+    const toggleMobileNav = () => {
+      body.classList.toggle("mobile-nav-active")
+      mobileNavToggleBtn?.classList.toggle("bi-list")
+      mobileNavToggleBtn?.classList.toggle("bi-x")
+      console.log("Toggled mobile-nav-active:", 
+        body.classList.contains("mobile-nav-active"))
+    }
+    mobileNavToggleBtn?.addEventListener("click", () => {
+      console.log("Mobile nav toggle clicked") // Debugging step
+      toggleMobileNav()
+    })
+    /**
+     * Hide mobile nav on same-page/hash links
+     */
+    
+    navLinks.forEach((link) =>
+      link.addEventListener("click", () => {
+        if (body.classList.contains("mobile-nav-active")) {
+          toggleMobileNav();
         }
       })
-
-    })
+    )
+    // Cleanup event listeners on component unmount
+    if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.removeEventListener("click", toggleMobileNav)
+      }
+      navLinks.forEach((link) =>
+        link.removeEventListener("click", toggleMobileNav)
+      )
 
     /**
-   * Toggle mobile nav dropdowns
-   */
-    document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+     * Toggle mobile nav dropdowns
+     */
+    select('.navmenu .toggle-dropdown', true).forEach(navmenu => {
       navmenu.addEventListener('click', function(e) {
         e.preventDefault();
         this.parentNode.classList.toggle('active')
-        this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+        this.parentNode.nextElementSibling.classList.toggle('dropdown-active')
         e.stopImmediatePropagation()
       })
     })
+    /**
+     * Preloader
+     */
+    const handlePreloader = () => {
+      const preloader = select("#preloader");
+      if (preloader) {
+        preloader.remove();
+      }
+    };
 
-    // Preloader
-    const preloader = document.querySelector("#preloader")
-    if (preloader) {
-      window.addEventListener("load", () => preloader.remove())
-    }
-
-    // Scroll to top
-    const scrollTop = document.querySelector(".scroll-top")
+    /**
+     * Scroll top button
+     */
     const toggleScrollTop = () => {
+      const scrollTop = select('.scroll-top')
       if (scrollTop) {
-        window.scrollY > 100
-          ? scrollTop.classList.add("active")
-          : scrollTop.classList.remove("active")
+        if (window.scrollY > 200) {
+          scrollTop.classList.add('active')
+        } else {
+          scrollTop.classList.remove('active')
+        }
       }
     }
-
+    // Scroll to top button functionality
+   
     if (scrollTop) {
-      scrollTop.addEventListener("click", (e) => {
-        e.preventDefault();
+      scrollTop.addEventListener('click', (e) => {
+        e.preventDefault()
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: 'smooth'
         })
       })
     }
 
-    window.addEventListener("load", toggleScrollTop)
-    document.addEventListener('scroll', toggleScrollTop)
-    toggleScrollTop()
+    /**
+     * Correct scrolling position upon page load for URLs containing hash links.
+     */
+    window.addEventListener('load', function() {
+      if (window.location.hash) {
+        if (select(window.location.hash)) {
+          setTimeout(() => {
+            let section = select(window.location.hash);
+            let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
+            window.scrollTo({
+              top: section.offsetTop - parseInt(scrollMarginTop),
+              behavior: 'smooth'
+            });
+          }, 100);
+        }
+      }
+    });
 
-       /**
-   * Animation on scroll function and init
-  */
-    function aosInit() {
-      Aos.init({
-        duration: 600,
-        easing: 'ease-in-out',
-        once: false,
-        mirror: false
-      })
-    }
-    window.addEventListener('load', aosInit) 
-
-    // Navmenu Scrollspy
-    const navMenuLinks = document.querySelectorAll(".navmenu a")
+    /**
+     * Navmenu Scrollspy
+     */
     const navmenuScrollspy = () => {
       navMenuLinks.forEach((link) => {
         if (!link.hash) return;
-        const section = document.querySelector(link.hash)
-        if (!section) return
-        const position = window.scrollY + 200
+        const section = select(link.hash);
+        if (!section) return;
+        const position = window.scrollY + 200;
         if (
           position >= section.offsetTop &&
           position <= section.offsetTop + section.offsetHeight
         ) {
-          document
-            .querySelectorAll(".navmenu a.active")
-            .forEach((activeLink) => activeLink.classList.remove("active"));
-          link.classList.add("active")
-        } else {
-          link.classList.remove("active")
-        }
-      })
-    }
-
-    window.addEventListener("scroll", navmenuScrollspy)
-    navmenuScrollspy()
-
-    return () => {
-      window.removeEventListener("scroll", toggleScrolled)
-      window.removeEventListener("scroll", toggleScrollTop)
-      window.removeEventListener("scroll", navmenuScrollspy)
-      if (mobileNavToggleBtn) {
-        mobileNavToggleBtn.removeEventListener("click", toggleMobileNav)
+            select(".navmenu a.active", true)
+            .forEach((activeLink) => activeLink.classList.remove("active"))
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        })
       }
-    }
 
-  }, [])
-
-  if (loading) return (
-    <div className="loading">
-      <span>.</span>
-      <span>.</span>
-      <span>.</span>
-      <span>.</span>
-      <span>.</span>
-    </div>
-  ) // You can show a loading spinner or placeholder
-
+      window.addEventListener("scroll", toggleScrolled)
+      window.addEventListener("scroll", toggleScrollTop )
+      window.addEventListener("scroll", navmenuScrollspy)
+      window.addEventListener("load", handlePreloader)
+      Aos.init({ duration: 600, easing: "ease-in-out"})
+            
+      setLoading(false);
+                
+      return () => {
+        window.removeEventListener("scroll", toggleScrolled)
+        window.removeEventListener("scroll", toggleScrollTop )
+        window.removeEventListener("scroll", navmenuScrollspy)
+        window.removeEventListener("load", handlePreloader)
+      }
+    }, [body.classList])
+        
+  if (loading) {
+    return (
+      <div className="loading">
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </div>
+    )
+  }
+  
   return (
-    <div className={classNames('app-container', { 'dark': isDarkMode, 'light': !isDarkMode })}>
+    <div className= {isDarkMode ? 'dark' : 'light' }>
       <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-      <main className="main">
-        <Hero />
-        <About />
-        <Projects />
-        <Stats isDarkMode={isDarkMode} />
-        <Alt />
-        <Client />
-        <Testimonials />
-        <Service isDarkMode={isDarkMode} />
-        <Action />
-        <Team isDarkMode={isDarkMode} />
-        <Contact />
-      </main>
+        <main className="main">
+          <Hero />
+          <About />
+          <Projects />
+          <Stats isDarkMode={isDarkMode} />
+          <Alt />
+          <Client />
+          <Testimonials />
+          <Service isDarkMode={isDarkMode} />
+          <Action />
+          <Team isDarkMode={isDarkMode} />
+          <Contact />
+        </main>
       <Footer isDarkMode={isDarkMode} />
     </div>
   )
 }
-
 export const App = () => (
   <ThemeProvider>
-    <AppContent />
+    <AppFunctions />
   </ThemeProvider>
-  
-)// The root DOM element where your app is mounted
+)
