@@ -199,9 +199,9 @@ const AppFunctions = () => {
           <Hero />
           <About />
           <Projects />
+          <Client />
           <Stats isDarkMode={isDarkMode} />
           <Alt />
-          <Client />
           <Testimonials />
           <Service isDarkMode={isDarkMode} />
           <Action />
